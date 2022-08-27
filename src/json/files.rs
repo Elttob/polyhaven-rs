@@ -39,8 +39,8 @@ impl From<Files> for files::Files {
 #[derive(Deserialize)]
 pub struct FileData {
     pub url: Option<String>,
-    pub md5: String,
-    pub size: u64,
+    pub md5: Option<String>,
+    pub size: Option<u64>,
     pub include: Option<HashMap<String, FileData>>,
 }
 
