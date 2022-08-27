@@ -7,7 +7,8 @@ use crate::{data::{self, asset::AssetType}, json};
 pub struct Params {
     pub asset_type: Option<AssetType>,
     pub categories: Vec<String>,
-    pub author: Option<String>
+    pub author: Option<String>,
+    pub search: Vec<String>
 }
 
 impl Params {
@@ -21,6 +22,14 @@ impl Params {
                 .unwrap()
             );
         }
+        if !self.search.is_empty() {
+            params.insert("search", self.search.iter()
+                .map(|x| x.to_string())
+                .reduce(|a, b| format!("{},{}", a, b))
+                .unwrap()
+            );
+        }
+
         if let Some(asset_type) = &self.asset_type {
             params.insert("type", match asset_type {
                 AssetType::HDRI => "hdris".to_string(),
