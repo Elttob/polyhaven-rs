@@ -22,10 +22,10 @@ impl Params {
             );
         }
         if let Some(asset_type) = &self.asset_type {
-            params.insert("asset_type", match asset_type {
-                AssetType::HDRI => "hdri".to_string(),
-                AssetType::Model => "model".to_string(),
-                AssetType::Texture => "texture".to_string()
+            params.insert("type", match asset_type {
+                AssetType::HDRI => "hdris".to_string(),
+                AssetType::Model => "models".to_string(),
+                AssetType::Texture => "textures".to_string()
             });
         }
         if let Some(author) = &self.author {
