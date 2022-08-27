@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-use crate::response::author;
+use crate::data::author;
 
 #[derive(Deserialize)]
 pub struct Author {

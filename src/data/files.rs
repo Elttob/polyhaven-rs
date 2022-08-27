@@ -1,5 +1,6 @@
 use std::{collections::HashMap, str::FromStr, convert::Infallible};
 
+#[derive(Debug)]
 pub struct FileData {
     pub url: String,
     pub md5: String,
@@ -9,6 +10,7 @@ pub struct FileData {
 
 type FileResolution = u64;
 
+#[derive(Debug)]
 pub struct HDRIFiles {
     pub hdri: HashMap<FileResolution, HashMap<HDRIFormat, FileData>>,
     pub backplates: HashMap<String, HashMap<HDRIBackplateFormat, FileData>>,
@@ -16,7 +18,7 @@ pub struct HDRIFiles {
     pub tonemapped: Option<FileData>
 } 
 
-#[derive(Hash, PartialEq, Eq)]
+#[derive(Debug, Hash, PartialEq, Eq)]
 pub enum HDRIFormat {
     Hdr,
     Exr,
@@ -35,7 +37,7 @@ impl FromStr for HDRIFormat {
     }
 }
 
-#[derive(Hash, PartialEq, Eq)]
+#[derive(Debug, Hash, PartialEq, Eq)]
 pub enum HDRIBackplateFormat {
     JpgPretty,
     JpgPlain,
@@ -56,13 +58,14 @@ impl FromStr for HDRIBackplateFormat {
     }
 }
 
+#[derive(Debug)]
 pub struct TextureFiles {
     pub blend: HashMap<FileResolution, FileData>,
     pub gltf: HashMap<FileResolution, FileData>,
     pub maps: HashMap<TextureMap, HashMap<FileResolution, HashMap<TextureFormat, FileData>>>,
 }
 
-#[derive(Hash, PartialEq, Eq)]
+#[derive(Debug, Hash, PartialEq, Eq)]
 pub enum TextureMap {
     AO,
     ARM,
@@ -95,7 +98,7 @@ impl FromStr for TextureMap {
     }
 }
 
-#[derive(Hash, PartialEq, Eq)]
+#[derive(Debug, Hash, PartialEq, Eq)]
 pub enum TextureFormat {
     Exr,
     Jpg,
@@ -116,6 +119,7 @@ impl FromStr for TextureFormat {
     }
 }
 
+#[derive(Debug)]
 pub struct ModelFiles {
     pub blend: HashMap<FileResolution, FileData>,
     pub gltf: HashMap<FileResolution, FileData>,

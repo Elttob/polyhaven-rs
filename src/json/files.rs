@@ -3,7 +3,7 @@ use std::{collections::HashMap, str::FromStr};
 
 use serde::Deserialize;
 
-use crate::response::files;
+use crate::data::files;
 
 fn parse_resolution(res_str: &str) -> Result<u64> {
     if res_str.ends_with("k") || res_str.ends_with("K") {

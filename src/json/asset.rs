@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use chrono::{DateTime, NaiveDateTime, Utc};
 use serde::Deserialize;
 
-use crate::response::asset;
+use crate::data::asset;
 
 #[derive(Deserialize)]
 pub struct AssetInfo {

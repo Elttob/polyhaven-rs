@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use chrono::{DateTime, Utc};
 
+#[derive(Debug)]
 pub struct AssetInfo {
     pub id: String,
     pub name: String,
@@ -21,6 +22,14 @@ impl AssetInfo {
     }
 }
 
+#[derive(Debug)]
+pub enum AssetType {
+    HDRI,
+    Texture,
+    Model
+}
+
+#[derive(Debug)]
 pub enum Asset {
     HDRI(HDRIAsset),
     Texture(TextureAsset),
@@ -28,6 +37,7 @@ pub enum Asset {
     Unparsed
 }
 
+#[derive(Debug)]
 pub struct HDRIAsset {
     pub whitebalance: Option<u32>,
     pub backplates: bool,
@@ -35,9 +45,11 @@ pub struct HDRIAsset {
     pub coords: Option<(f32, f32)>
 }
 
+#[derive(Debug)]
 pub struct TextureAsset {
     pub dimensions: (f32, f32)
 }
 
+#[derive(Debug)]
 pub struct ModelAsset;
 
