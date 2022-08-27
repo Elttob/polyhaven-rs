@@ -20,8 +20,6 @@ fn parse_resolution(res_str: &str) -> Result<u64> {
     
 }
 
-#[derive(Deserialize)]
-#[serde(untagged)]
 pub enum Files {
     HDRI(HDRIFiles),
     Texture(TextureFiles),
