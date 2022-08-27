@@ -38,9 +38,9 @@ impl From<Files> for files::Files {
 
 #[derive(Deserialize)]
 pub struct FileData {
-    pub url: Option<String>,
-    pub md5: Option<String>,
-    pub size: Option<u64>,
+    pub url: String,
+    pub md5: String,
+    pub size: u64,
     pub include: Option<HashMap<String, FileData>>,
 }
 
@@ -54,6 +54,39 @@ impl From<FileData> for files::FileData {
                 .map(|(path, file_json)| (path, file_json.into()))
                 .collect()
         }
+    }
+}
+
+#[derive(Deserialize)]
+pub struct BlendFileData {
+    blend: FileData
+}
+
+impl From<BlendFileData> for FileData {
+    fn from(data: BlendFileData) -> Self {
+        data.blend
+    }
+}
+
+#[derive(Deserialize)]
+pub struct GltfFileData {
+    gltf: FileData
+}
+
+impl From<GltfFileData> for FileData {
+    fn from(data: GltfFileData) -> Self {
+        data.gltf
+    }
+}
+
+#[derive(Deserialize)]
+pub struct FbxFileData {
+    fbx: FileData
+}
+
+impl From<FbxFileData> for FileData {
+    fn from(data: FbxFileData) -> Self {
+        data.fbx
     }
 }
 
@@ -110,8 +143,8 @@ pub type HDRIBackplateFormat = String;
 #[derive(Deserialize)]
 #[allow(non_snake_case)]
 pub struct TextureFiles {
-    pub blend: HashMap<FileResolution, FileData>,
-    pub gltf: HashMap<FileResolution, FileData>,
+    pub blend: HashMap<FileResolution, BlendFileData>,
+    pub gltf: HashMap<FileResolution, GltfFileData>,
 
     pub AO: Option<HashMap<FileResolution, HashMap<TextureFormat, FileData>>>,
     pub arm: Option<HashMap<FileResolution, HashMap<TextureFormat, FileData>>>,
@@ -140,7 +173,7 @@ impl From<TextureFiles> for files::TextureFiles {
             blend: json.blend.into_iter()
                 .filter_map(|(res_str, file_json)| {
                     match parse_resolution(&res_str) {
-                        Ok(res) => Some((res, files::FileData::from(file_json))),
+                        Ok(res) => Some((res, files::FileData::from(FileData::from(file_json)))),
                         Err(_) => None
                     }
                 })
@@ -148,7 +181,7 @@ impl From<TextureFiles> for files::TextureFiles {
             gltf: json.gltf.into_iter()
                 .filter_map(|(res_str, file_json)| {
                     match parse_resolution(&res_str) {
-                        Ok(res) => Some((res, files::FileData::from(file_json))),
+                        Ok(res) => Some((res, files::FileData::from(FileData::from(file_json)))),
                         Err(_) => None
                     }
                 })
@@ -183,9 +216,9 @@ pub type TextureFormat = String;
 #[derive(Deserialize)]
 #[allow(non_snake_case)]
 pub struct ModelFiles {
-    pub blend: HashMap<FileResolution, FileData>,
-    pub gltf: HashMap<FileResolution, FileData>,
-    pub fbx: HashMap<FileResolution, FileData>,
+    pub blend: HashMap<FileResolution, BlendFileData>,
+    pub gltf: HashMap<FileResolution, GltfFileData>,
+    pub fbx: HashMap<FileResolution, FbxFileData>,
 
     pub AO: Option<HashMap<FileResolution, HashMap<TextureFormat, FileData>>>,
     pub arm: Option<HashMap<FileResolution, HashMap<TextureFormat, FileData>>>,
@@ -215,7 +248,7 @@ impl From<ModelFiles> for files::ModelFiles {
             blend: json.blend.into_iter()
                 .filter_map(|(res_str, file_json)| {
                     match parse_resolution(&res_str) {
-                        Ok(res) => Some((res, files::FileData::from(file_json))),
+                        Ok(res) => Some((res, files::FileData::from(FileData::from(file_json)))),
                         Err(_) => None
                     }
                 })
@@ -223,7 +256,7 @@ impl From<ModelFiles> for files::ModelFiles {
             gltf: json.gltf.into_iter()
                 .filter_map(|(res_str, file_json)| {
                     match parse_resolution(&res_str) {
-                        Ok(res) => Some((res, files::FileData::from(file_json))),
+                        Ok(res) => Some((res, files::FileData::from(FileData::from(file_json)))),
                         Err(_) => None
                     }
                 })
@@ -231,7 +264,7 @@ impl From<ModelFiles> for files::ModelFiles {
             fbx: json.fbx.into_iter()
                 .filter_map(|(res_str, file_json)| {
                     match parse_resolution(&res_str) {
-                        Ok(res) => Some((res, files::FileData::from(file_json))),
+                        Ok(res) => Some((res, files::FileData::from(FileData::from(file_json)))),
                         Err(_) => None
                     }
                 })
