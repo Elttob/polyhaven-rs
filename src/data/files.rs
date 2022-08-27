@@ -11,6 +11,13 @@ pub struct FileData {
 type FileResolution = u64;
 
 #[derive(Debug)]
+pub enum Files {
+    HDRI(HDRIFiles),
+    Texture(TextureFiles),
+    Model(ModelFiles)
+}
+
+#[derive(Debug)]
 pub struct HDRIFiles {
     pub hdri: HashMap<FileResolution, HashMap<HDRIFormat, FileData>>,
     pub backplates: HashMap<String, HashMap<HDRIBackplateFormat, FileData>>,

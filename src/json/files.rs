@@ -21,6 +21,24 @@ fn parse_resolution(res_str: &str) -> Result<u64> {
 }
 
 #[derive(Deserialize)]
+#[serde(untagged)]
+pub enum Files {
+    HDRI(HDRIFiles),
+    Texture(TextureFiles),
+    Model(ModelFiles)
+}
+
+impl From<Files> for files::Files {
+    fn from(json: Files) -> Self {
+        match json {
+            Files::HDRI(data) => files::Files::HDRI(data.into()),
+            Files::Texture(data) => files::Files::Texture(data.into()),
+            Files::Model(data) => files::Files::Model(data.into())
+        }
+    }
+}
+
+#[derive(Deserialize)]
 pub struct FileData {
     pub url: String,
     pub md5: String,
