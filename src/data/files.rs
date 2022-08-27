@@ -3,8 +3,8 @@ use std::{collections::HashMap, str::FromStr, convert::Infallible};
 #[derive(Debug)]
 pub struct FileData {
     pub url: Option<String>,
-    pub md5: String,
-    pub size: u64,
+    pub md5: Option<String>,
+    pub size: Option<u64>,
     pub include: HashMap<String, FileData>,
 }
 
