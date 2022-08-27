@@ -46,7 +46,7 @@ pub async fn get(params: Params) -> Result<HashMap<String, data::asset::AssetInf
     let resp = reqwest::get(url).await?.json::<HashMap<String, json::asset::AssetInfo>>().await?;
     Ok(
         resp.into_iter()
-        .map(|(id, json)| (id, data::asset::AssetInfo::from(json)))
+        .map(|(id, json)| (id.to_string(), data::asset::AssetInfo::from_json(json, id)))
         .collect()
     )
 }

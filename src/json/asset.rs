@@ -7,7 +7,6 @@ use crate::data::asset;
 
 #[derive(Deserialize)]
 pub struct AssetInfo {
-    pub id: String,
     #[serde(rename = "type")]
     pub asset_type: i32,
     pub name: String,
@@ -26,10 +25,10 @@ pub struct AssetInfo {
     pub dimensions: Option<(f32, f32)>
 }
 
-impl From<AssetInfo> for asset::AssetInfo {
-    fn from(json: AssetInfo) -> Self {
+impl asset::AssetInfo {
+    pub fn from_json(json: AssetInfo, id: String) -> Self {
         Self {
-            id: json.id,
+            id: id,
             name: json.name,
             date_published: DateTime::from_utc(NaiveDateTime::from_timestamp(json.date_published, 0), Utc),
             download_count: json.download_count,
